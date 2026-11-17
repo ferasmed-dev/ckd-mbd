@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alteraciones del metabolismo mineral y óseo en la ERC · simulador docente</title>
+<meta name="description" content="Simulador interactivo del CKD-MBD: fósforo, FGF23, calcitriol, calcio y PTH a medida que cae el filtrado; hiperparatiroidismo secundario y terciario, osteodistrofia renal y calcificación vascular.">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='11' cy='11' rx='5' ry='6' fill='%23c0392b'/%3E%3Cellipse cx='21' cy='11' rx='5' ry='6' fill='%23c0392b'/%3E%3Cellipse cx='11' cy='22' rx='5' ry='6' fill='%23e57368'/%3E%3Cellipse cx='21' cy='22' rx='5' ry='6' fill='%23e57368'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1 data-i18n="h1"></h1>
+    <p class="sub" data-i18n="sub"></p>
+  </div>
+  <div class="top-right">
+    <div class="lang" role="group" data-i18n-aria="lang.switch">
+      <button type="button" class="btn small" data-lang="es" lang="es">ES</button>
+      <button type="button" class="btn small" data-lang="en" lang="en">EN</button>
+    </div>
+    <div class="legend-tags"><span class="tag tag-model" data-i18n="tag.model"></span> <span data-i18n="legend.model"></span></div>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="card controls" aria-labelledby="h-controls">
+    <h2 id="h-controls" data-i18n="controls"></h2>
+    <div class="transport">
+      <button id="btn-play" class="btn primary" type="button" aria-pressed="false"></button>
+      <button id="btn-reset" class="btn" type="button" data-i18n="reset"></button>
+      <span id="clock" class="clock" aria-live="polite"></span>
+    </div>
+    <fieldset class="presets">
+      <legend data-i18n="scenarios"></legend>
+      <div class="preset-row" id="presets"></div>
+      <p id="preset-expect" class="hint"></p>
+      <button id="btn-link" class="btn small" type="button" hidden></button>
+    </fieldset>
+    <div class="slider">
+      <label for="s-slope"><span data-i18n="s.slope"></span> <output id="o-slope"></output></label>
+      <input id="s-slope" type="range" min="0" max="10" step="0.5">
+      <p class="hint" data-i18n="s.slope.hint"></p>
+    </div>
+    <div class="slider">
+      <label for="s-vitd"><span data-i18n="s.vitd"></span> <output id="o-vitd"></output></label>
+      <input id="s-vitd" type="range" min="5" max="50" step="1">
+      <p class="hint" data-i18n="s.vitd.hint"></p>
+    </div>
+    <div class="slider">
+      <label for="s-speed"><span data-i18n="s.speed"></span> <output id="o-speed"></output></label>
+      <input id="s-speed" type="range" min="0.25" max="3" step="0.25">
+    </div>
+    <fieldset class="toggles">
+      <legend data-i18n="treatment"></legend>
+      <label class="switch"><input id="t-dietP" type="checkbox"><span><span data-i18n="t.dietP"></span> <small data-i18n="t.dietP.small"></small></span></label>
+      <label class="switch"><input id="t-binderNonCa" type="checkbox"><span><span data-i18n="t.binderNonCa"></span> <small data-i18n="t.binderNonCa.small"></small></span></label>
+      <label class="switch"><input id="t-binderCa" type="checkbox"><span><span data-i18n="t.binderCa"></span> <small data-i18n="t.binderCa.small"></small></span></label>
+      <label class="switch"><input id="t-caSupplement" type="checkbox"><span><span data-i18n="t.caSupplement"></span> <small data-i18n="t.caSupplement.small"></small></span></label>
+      <label class="switch"><input id="t-colecalciferol" type="checkbox"><span><span data-i18n="t.colecalciferol"></span> <small data-i18n="t.colecalciferol.small"></small></span></label>
+      <label class="switch"><input id="t-calcitriol" type="checkbox"><span><span data-i18n="t.calcitriol"></span> <small data-i18n="t.calcitriol.small"></small></span></label>
+      <label class="switch"><input id="t-calcimimetic" type="checkbox"><span><span data-i18n="t.calcimimetic"></span> <small data-i18n="t.calcimimetic.small"></small></span></label>
+    </fieldset>
+    <fieldset class="toggles">
+      <legend data-i18n="renal"></legend>
+      <label class="switch"><input id="t-dialysis" type="checkbox"><span><span data-i18n="t.dialysis"></span> <small data-i18n="t.dialysis.small"></small></span></label>
+      <div class="action-row"><button id="btn-tx" class="btn small" type="button" data-i18n="btn.tx"></button><button id="btn-ptx" class="btn small" type="button" data-i18n="btn.ptx"></button></div>
+      <label class="switch subtle"><input id="t-cf" type="checkbox" checked><span data-i18n="t.cf"></span></label>
+    </fieldset>
+    <details class="advanced">
+      <summary><span data-i18n="advanced"></span> <span class="tag tag-model" data-i18n="tag.model"></span></summary>
+      <div class="slider"><label for="a-egfr0"><span data-i18n="a.egfr0"></span> <output id="o-egfr0"></output></label><input id="a-egfr0" type="range" min="5" max="120" step="1"></div>
+      <div class="slider"><label for="a-pIntake"><span data-i18n="a.pIntake"></span> <output id="o-pIntake"></output></label><input id="a-pIntake" type="range" min="600" max="2000" step="50"></div>
+      <div class="slider"><label for="a-binder"><span data-i18n="a.binder"></span> <output id="o-binder"></output></label><input id="a-binder" type="range" min="0" max="0.6" step="0.05"></div>
+      <div class="slider"><label for="a-kH"><span data-i18n="a.kH"></span> <output id="o-kH"></output></label><input id="a-kH" type="range" min="0" max="0.6" step="0.02"></div>
+      <div class="slider"><label for="a-kCalc"><span data-i18n="a.kCalc"></span> <output id="o-kCalc"></output></label><input id="a-kCalc" type="range" min="0" max="6" step="0.25"></div>
+      <div class="slider"><label for="a-horizon"><span data-i18n="a.horizon"></span> <output id="o-horizon"></output></label><input id="a-horizon" type="range" min="5" max="30" step="1"></div>
+      <button id="btn-defaults" class="btn small" type="button" data-i18n="defaults"></button>
+    </details>
+  </section>
+
+  <section class="card schematic" aria-labelledby="h-schem">
+    <h2 id="h-schem" data-i18n="schem"></h2>
+    <div id="axis" class="glom-host"></div>
+  </section>
+
+  <section class="card explain" aria-labelledby="h-exp">
+    <h2 id="h-exp" data-i18n="explain"></h2>
+    <ol id="cycle" class="cycle"></ol>
+    <div id="treat-note" class="treat-note" hidden></div>
+    <h3 data-i18n="log"></h3>
+    <ul id="log" class="log" aria-live="polite"></ul>
+  </section>
+
+  <section class="card stats"><div class="tiles" id="tiles"></div></section>
+  <section class="card indices" aria-labelledby="h-tg">
+    <h2 id="h-tg" data-i18n="targets"></h2>
+    <div id="targets"></div>
+  </section>
+
+  <section class="card charts" aria-labelledby="h-charts">
+    <h2 id="h-charts" data-i18n="charts"></h2>
+    <div class="chart-legend" id="cf-legend"><span><i></i><span data-i18n="legend.current"></span></span><span><i class="cf"></i><span data-i18n="legend.cf"></span></span></div>
+    <div class="chart-grid">
+      <div id="c-egfr"></div><div id="c-P"></div><div id="c-Ca"></div><div id="c-PTH"></div>
+      <div id="c-FGF23"></div><div id="c-cal"></div><div id="c-G"></div><div id="c-cac"></div>
+    </div>
+    <details class="table-view"><summary data-i18n="table"></summary><div id="data-table"></div></details>
+  </section>
+
+  <section class="card normals" aria-labelledby="h-norm">
+    <h2 id="h-norm" data-i18n="normals"></h2>
+    <ul id="normals-list"></ul>
+    <p class="hint" data-i18n="normals.model"></p>
+  </section>
+</main>
+
+<footer class="foot" data-i18n="footer"></footer>
+<script type="module" src="src/ui.js"></script>
+</body>
+</html>

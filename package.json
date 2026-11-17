@@ -1,0 +1,12 @@
+{
+  "name": "ckd-mbd",
+  "version": "1.0.0",
+  "description": "Interactive teaching simulator of CKD–mineral and bone disorder: phosphate, FGF23, calcitriol, calcium, PTH, secondary hyperparathyroidism and vascular calcification (no build step).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "start": "python3 -m http.server 8000"
+  },
+  "license": "MIT"
+}

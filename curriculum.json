@@ -1,0 +1,19 @@
+{
+  "topic": "CKD–mineral and bone disorder (CKD-MBD) and secondary hyperparathyroidism",
+  "topic_es": "Alteraciones del metabolismo óseo-mineral en la ERC e hiperparatiroidismo secundario",
+  "system": "Renal",
+  "specialty": "Nephrology",
+  "relatedSpecialties": ["Endocrinology", "Pharmacology"],
+  "eciModule": [
+    "I. Morfología, estructura y función del cuerpo humano",
+    "III. Formación clínica humana",
+    "IV. Procedimientos diagnósticos y terapéuticos"
+  ],
+  "typicalSubjects": ["Fisiología", "Fisiopatología", "Patología médica / Nefrología", "Endocrinología", "Farmacología"],
+  "mirRelevant": true,
+  "keywords_es": ["enfermedad renal crónica", "ERC", "CKD-MBD", "fósforo", "FGF23", "calcitriol", "PTH", "hiperparatiroidismo secundario", "hiperparatiroidismo terciario", "osteodistrofia renal", "calcificación vascular", "quelantes de fósforo", "calcimiméticos", "paratiroidectomía", "KDIGO"],
+  "keywords_en": ["chronic kidney disease", "CKD", "CKD-MBD", "phosphate", "FGF23", "calcitriol", "PTH", "secondary hyperparathyroidism", "tertiary hyperparathyroidism", "renal osteodystrophy", "vascular calcification", "phosphate binders", "calcimimetics", "parathyroidectomy", "KDIGO"],
+  "presets": ["healthy", "ckdUntreated", "ckdGuideline", "calciumFirst", "dialysisSevereHPT", "transplantTertiary"],
+  "languages": ["es", "en"],
+  "format": "interactive simulator (static web page)"
+}
